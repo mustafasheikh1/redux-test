@@ -1,25 +1,21 @@
-import logo from './logo.svg';
 import './App.css';
+import { connect, useSelector } from 'react-redux';
+import { addData } from './store/actions/dataAction';
+import { persistor } from './store';
 
-function App() {
+const App = (props) => {
+  const { addData } = props;
+  const { appData } = useSelector((state) => state);
+
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <h1>{appData.data}</h1>
+        <button style={{ margin: '1rem' }} onClick={() => addData(1)}>ADD</button>
+        <button style={{ margin: '1rem' }} onClick={() => persistor.pause()}>PAUSE</button>
       </header>
     </div>
   );
 }
 
-export default App;
+export default connect(null, { addData })(App);
